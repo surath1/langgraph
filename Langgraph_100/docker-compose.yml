@@ -1,0 +1,18 @@
+# ==========================================
+# docker-compose.yml (for easy local development)
+# ==========================================
+version: '3.8'
+
+services:
+  chatbot:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - COSMOS_ENDPOINT=${COSMOS_ENDPOINT}
+      - COSMOS_KEY=${COSMOS_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - DEBUG=true
+    volumes:
+      - .:/app
+    restart: unless-stopped

@@ -1,0 +1,53 @@
+llm:
+  openai:
+    provider: "openai"
+    defaults:
+      timeout: 180  
+      temperature: 0.0
+      max_retries: 3
+    models:
+      o4-mini:
+        model_name: "o4-mini"
+        api_version: "2024-06-13"  
+      gpt-4:
+        model_name: "gpt-4"
+        api_version: "2024-06-13"  
+      gpt-5:
+        model_name: "gpt-5"
+        api_version: "2024-06-13"  
+  groq:
+    provider: "groq"
+    defaults:
+      timeout: 180  
+      temperature: 0.7
+      max_retries: 3
+    models:
+      model_name: "deepseek-r1-distill-llama-70b"
+      version: "2024-06-13"
+  gemini:
+    provider: "gemini"
+    defaults:
+      timeout: 180  
+      temperature: 0.7
+      max_retries: 3
+    model:  
+      model_name: "gemini-pro"
+      version: "2024-06-13"
+  ollama:
+    provider: "ollama"
+    defaults:
+      timeout: 180  
+      temperature: 0.7
+      max_retries: 3
+    models:  
+      model_name: "llama3"
+      version: "1.0"
+  anthropic:
+    provider: "anthropic"
+    defaults:
+      timeout: 180  
+      temperature: 0.7
+      max_retries: 3
+    models:
+      model_name: "claude-3"
+      version: "2024-06-13"  

@@ -1,10 +1,12 @@
 import os
-from dotenv import load_dotenv
-load_dotenv()
 from langchain.tools import tool
 from langchain_community.utilities.alpha_vantage import AlphaVantageAPIWrapper
-from backend.config.constant import logger
+from config.constant import logger, ALPHAVANTAGE_API_KEY
+from dotenv import load_dotenv
+load_dotenv()
 
+
+"""Arithmetic Tool with basic operations and currency conversion using AlphaVantage API."""
 @tool
 def add(a: int, b: int) -> int:
     """
@@ -71,7 +73,7 @@ def divide(a: int, b: int) -> float:
 @tool
 def currency_converter(from_curr: str, to_curr: str, value: float)->float:
     logger.info(f"Converting {value} from {from_curr} to {to_curr}")
-    os.environ["ALPHAVANTAGE_API_KEY"] = os.getenv('ALPHAVANTAGE_API_KEY')
+    os.environ["ALPHAVANTAGE_API_KEY"] = ALPHAVANTAGE_API_KEY
     alpha_vantage = AlphaVantageAPIWrapper()
     response = alpha_vantage._get_exchange_rate(from_curr, to_curr)
     exchange_rate = response['Realtime Currency Exchange Rate']['5. Exchange Rate']

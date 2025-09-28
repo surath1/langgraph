@@ -1,6 +1,5 @@
 import yaml
-import os
-from backend.config.constant import logger
+from config.constant import logger
 
 """ Load configuration from a YAML file. """
 def load_config(config_path: str = "config/config.yaml") -> dict:

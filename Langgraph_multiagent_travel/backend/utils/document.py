@@ -1,7 +1,8 @@
 import os
 import datetime
-from backend.config.constant import logger
+from config.constant import logger
 
+"""Utility functions for document handling"""
 def save_document(response_text: str, directory: str = "./output"):
     """Export travel plan to Markdown file with proper formatting"""
     os.makedirs(directory, exist_ok=True)

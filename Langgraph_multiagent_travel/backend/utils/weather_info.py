@@ -1,7 +1,7 @@
 import requests
-from backend.config.constant import logger
+from config.constant import logger
 
-
+"""https://home.openweathermap.org/api_keys"""
 """ A simple weather forecast tool using OpenWeatherMap API. """
 class WeatherForecastTool:
     def __init__(self, api_key:str):

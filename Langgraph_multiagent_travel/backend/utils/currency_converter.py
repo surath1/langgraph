@@ -1,9 +1,11 @@
 import requests
-from backend.config.constant import logger
+from config.constant import logger
 
 """ A simple currency converter class using ExchangeRate-API. """
 class CurrencyConverter:
     def __init__(self, api_key: str):
+
+        """Example Request: https://v6.exchangerate-api.com/v6/8ed25440b8f3bc99492de451/latest/USD"""
         self.base_url = f"https://v6.exchangerate-api.com/v6/{api_key}/latest/"
         logger.info("Currency Converter initialized with provided API key.")
     

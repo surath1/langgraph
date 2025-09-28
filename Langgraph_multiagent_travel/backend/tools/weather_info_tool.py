@@ -1,21 +1,21 @@
-import os
 from utils.weather_info import WeatherForecastTool
 from langchain.tools import tool
 from typing import List
-from dotenv import load_dotenv
-load_dotenv()
-from backend.config.constant import logger
+from config.constant import logger, OPEN_WEATHER_MAP_API_KEY
 
+"""Class to setup weather information tools using OpenWeatherMap API."""
 class WeatherInfoTool:
     def __init__(self):
         
         logger.info("Initializing Weather Info Tool")
-        self.api_key = os.environ.get("OPENWEATHERMAP_API_KEY")
+        """https://home.openweathermap.org/api_keys"""
+        self.api_key = OPEN_WEATHER_MAP_API_KEY
         self.weather_service = WeatherForecastTool(self.api_key)
         self.weather_tool_list = self._setup_tools()
     
+    """Setup weather information tools."""
     def _setup_tools(self) -> List:
-        """Setup all tools for the weather forecast tool"""
+        logger.info("Setting up weather tools")
         @tool
         def get_current_weather(city: str) -> str:
             """Get current weather for a city"""

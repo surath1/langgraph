@@ -1,21 +1,21 @@
-import os
 from utils.currency_converter import CurrencyConverter
 from typing import List
 from langchain.tools import tool
-from dotenv import load_dotenv
-load_dotenv()
-from backend.config.constant import logger
+from config.constant import logger, EXCHANGE_RATE_API_KEY
 
-class CurrencyConverterTool:
+"""Currency Conversion Tool using CurrencyConverter service"""
+class CurrencyConversionTool:
     def __init__(self):
-        
-        logger.info("Initializing CurrencyConverterTool.")
-        self.api_key = os.environ.get("EXCHANGE_RATE_API_KEY")
+
+        logger.info("Initializing Currency Conversion .")
+        """ https://app.exchangerate-api.com/dashboard """
+        self.api_key = EXCHANGE_RATE_API_KEY
         self.currency_service = CurrencyConverter(self.api_key)
         self.currency_converter_tool_list = self._setup_tools()
 
+    """ Setup all tools for the currency converter tool """
     def _setup_tools(self) -> List:
-        """Setup all tools for the currency converter tool"""
+        logger.info("Setting up currency conversion tools.")
         @tool
         def convert_currency(amount:float, from_currency:str, to_currency:str):
             """Convert amount from one currency to another"""

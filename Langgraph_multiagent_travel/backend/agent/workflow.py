@@ -1,15 +1,15 @@
 
-from Langgraph_multiagent_travel.backend.utils.llm_loader import ModelLoader
+from utils.llm_loader import ModelLoader
 from prompts.prompt import SYSTEM_MESSAGE
 from langgraph.graph import StateGraph, MessagesState, END, START
 from langgraph.prebuilt import ToolNode, tools_condition
 from tools.weather_info_tool import WeatherInfoTool
-from tools.place_search_tool import PlaceSearchTool
+from tools.search_tool import SearchTool
 from tools.expense_calculator_tool import CalculatorTool
-from tools.currency_conversion_tool import CurrencyConverterTool
-from backend.config.constant import logger
+from tools.currency_conversion_tool import CurrencyConversionTool
+from config.constant import logger
 
-## Main class to build the graph
+"""Module to build a workflow graph for a travel planning agent using LLMs and various tools."""
 class GraphBuilder():
     """Class to build a workflow graph for a travel planning agent using LLMs and various tools."""
     def __init__(self,model_provider: str = "openai"):
@@ -21,9 +21,9 @@ class GraphBuilder():
         self.tools = []
         
         self.weather_tools = WeatherInfoTool()
-        self.place_search_tools = PlaceSearchTool()
+        self.place_search_tools = SearchTool()
         self.calculator_tools = CalculatorTool()
-        self.currency_converter_tools = CurrencyConverterTool()
+        self.currency_converter_tools = CurrencyConversionTool()
         
         self.tools.extend([* self.weather_tools.weather_tool_list, 
                            * self.place_search_tools.place_search_tool_list,
@@ -36,7 +36,7 @@ class GraphBuilder():
         
         self.system_prompt = SYSTEM_MESSAGE
     
-    # Main agent function
+    """Agent function that processes user input and generates a response using the LLM with tools."""  
     def agent_function(self,state: MessagesState):
         """Function that processes the user input and generates a response using the LLM with tools."""
         
@@ -47,7 +47,7 @@ class GraphBuilder():
         return {"messages": [response]}
     
 
-    # Bild the graph with nodes and edges thi is the main function
+    """Builds and returns the workflow graph."""
     def build_graph(self):
         """Builds and returns the workflow graph."""
 
@@ -62,7 +62,7 @@ class GraphBuilder():
         self.graph = graph_builder.compile()
         return self.graph
 
-    # Call method to build and return the graph    
+    """Calls the build_graph method and returns the constructed graph."""   
     def __call__(self):
         """Calls the build_graph method and returns the constructed graph."""
         logger.info("Instance called.")

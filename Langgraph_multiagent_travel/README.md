@@ -20,7 +20,8 @@ This repository is intended as a reference implementation and research prototype
 The system consists of:
 
 - A FastAPI backend (`endpoints/main.py`) that builds the workflow graph using `backend.agent.workflow.GraphBuilder`. The backend exposes endpoints to create a session and query the agent.
-- A Streamlit frontend (`streamlit_app.py`) that sends user inputs to the backend and renders the returned Markdown plan.
+ - A FastAPI backend (`backend/main.py`) that builds the workflow graph using `backend/agent/workflow.GraphBuilder`. The backend exposes endpoints to create a session and query the agent under the `/api` prefix.
+ - A Streamlit frontend (`frontend/streamlit_app.py`) that sends user inputs to the backend and renders the returned Markdown plan.
 - A small tools collection under `backend/tools/` (weather, place search, currency conversion, expense calculator) used by the agent to fetch or compute data.
 - LLM loader and configuration under `backend/utils/` and `backend/config/config.yaml` that allow switching between providers (OpenAI, Groq, Gemini, Ollama — with Groq/OpenAI supported in code).
 
@@ -36,15 +37,16 @@ Prerequisites
 
 Steps
 
-1. Create and activate a virtual environment:
+1. Create and activate a virtual environment inside the example folder:
 
-	- Windows (cmd.exe):
+		- Windows (cmd.exe):
 
-	  ```cmd
-	  python -m venv .venv
-	  .venv\Scripts\activate
-	  pip install -r requirements.txt
-	  ```
+			```cmd
+			cd Langgraph_multiagent_travel
+			python -m venv .venv
+			.\.venv\Scripts\activate
+			pip install -r backend/requirements.txt
+			```
 
 2. Create a `.env` (optional) in the project root and add your keys (example):
 
@@ -53,29 +55,34 @@ Steps
 	GROQ_API_KEY=...
 	```
 
-3. Start the backend FastAPI server (from project root):
+3. Start the backend FastAPI server (from the example folder):
 
 	```cmd
-	uvicorn endpoints.main:app --host 0.0.0.0 --port 8000 --reload
+	uvicorn backend.main:app --host 0.0.0.0 --port 8000 --reload
 	```
 
 4. Start the Streamlit frontend (in a separate terminal):
 
 	```cmd
-	streamlit run streamlit_app.py
+	cd Langgraph_multiagent_travel
+	.\.venv\Scripts\activate
+	streamlit run frontend/streamlit_app.py
 	```
 
-5. Open the Streamlit UI (usually at http://localhost:8501) and enter a travel planning query (for example: "Plan a 5-day trip to Goa"). The app sends the query to `http://localhost:8000/app/query` and displays the generated Markdown plan.
+5. Open the Streamlit UI (usually at http://localhost:8501) and enter a travel planning query (for example: "Plan a 5-day trip to Goa"). The frontend communicates with the backend using the `/api` prefix (for example `http://localhost:8000/api/chat`).
 
 API endpoints (from the backend)
 
-- GET /app/health — health check
-- POST /app/create_session — builds and saves a visual graph (saves `my_graph.png`)
-- POST /app/query — accepts a JSON payload with `message` and returns `{"answer": "..."}`
+- GET /api/health — health check
+- POST /api/create_session — returns a new session id and may build/save a visual graph (`my_graph.png`)
+- POST /api/chat — main chat endpoint; accepts a JSON payload with `message` and returns `{ "answer": "..." }`
+- POST /api/chat_weather — chat endpoint that enables weather tool
+- GET  /api/models — placeholder listing of available models
+- POST /api/save_document — saves a travel document payload (demo helper)
 
 Example query payloads
 
-POST /app/query
+POST /api/chat (example)
 
 Request body (JSON):
 

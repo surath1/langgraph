@@ -2,7 +2,7 @@ import os
 import json
 from langchain_tavily import TavilySearch
 from langchain_google_community import GooglePlacesTool, GooglePlacesAPIWrapper 
-from backend.config.constant import logger
+from config.constant import logger
 
 """ A utility module for searching place information using Google Places API and TavilySearch. """
 class GooglePlaceSearchTool:

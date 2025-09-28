@@ -1,0 +1,8 @@
+# Frontend (Streamlit) requirements
+streamlit>=1.26.0
+requests>=2.28.0
+
+# If the frontend needs to call the backend directly and authenticate, consider adding
+# python-dotenv to load env vars in local development
+python-dotenv>=1.0.0
+

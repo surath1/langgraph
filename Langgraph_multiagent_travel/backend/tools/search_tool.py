@@ -1,21 +1,19 @@
-import os
-from utils.place_info_search import GooglePlaceSearchTool, TavilyPlaceSearchTool
+from utils.place_search import GooglePlaceSearchTool, TavilyPlaceSearchTool
 from typing import List
 from langchain.tools import tool
-from dotenv import load_dotenv
-load_dotenv()
-from backend.config.constant import logger
+from config.constant import logger, GOOGLE_API_KEY
 
-
-class PlaceSearchTool:
+"""Class to encapsulate search tools using Google Places and Tavily APIs."""
+class SearchTool:
     def __init__(self):
         
-        logger.info("Initializing Place Search Tool")
-        self.google_api_key = os.environ.get("GPLACES_API_KEY")
+        logger.info("Initializing Search Tool")
+        self.google_api_key = GOOGLE_API_KEY
         self.google_places_search = GooglePlaceSearchTool(self.google_api_key)
         self.tavily_search = TavilyPlaceSearchTool()
         self.place_search_tool_list = self._setup_tools()
 
+    """Setup all tools for the place search tool"""
     def _setup_tools(self) -> List:
         """Setup all tools for the place search tool"""
         @tool

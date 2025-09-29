@@ -1,0 +1,15 @@
+
+# LangGraph ReAct Agent Requirements
+# Install with: pip install -r requirements.txt
+
+# Core LangGraph and LangChain packages
+langgraph>=0.2.20
+langchain-core>=0.3.0
+langchain-google-genai>=2.0.0
+
+# HTTP requests and geocoding
+requests>=2.31.0
+geopy>=2.4.0
+
+# Data handling (comes with langchain-core, but specified for clarity)
+pydantic>=2.5.0
